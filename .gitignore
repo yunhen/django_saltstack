@@ -29,6 +29,7 @@ tramp
 .\#*
 *.swp
 *.swo
+.ropeproject
 
 # Mac
 .DS_Store

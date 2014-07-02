@@ -191,10 +191,12 @@ DJANGO_APPS = (
     'django.contrib.admin',
     # 'django.contrib.admindocs',
     'django_extensions',
+    'adminsortable',
 )
 
 # Apps specific for this project go here.
 LOCAL_APPS = (
+    'main',
 )
 
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps

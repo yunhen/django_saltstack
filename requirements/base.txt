@@ -4,3 +4,6 @@ django-extensions
 django-braces
 django-model-utils
 South
+salt
+django-uuidfield==0.5.0
+django-admin-sortable
