@@ -1,14 +1,11 @@
-<html>
-<body style="">
-<div style="text-align: center; max-width:800px; margin: 0 auto; padding: 10px">
-{% if last_cmd_out %}
+{% extends 'base.html' %}
+
+{% block content %}
+{% if task_id %}
 <p><a href=".">Run another command</a></p>
-<h1>Cmd output:</h1>
+<h1>Cmd has been queued:</h1>
 <pre>{{ cmd }}</pre>
-{% for minion, output in last_cmd_out.items %}
-<h2 style="text-align:left;">Minion: {{ minion }}</h2>
-<pre style="text-align:left; border: 1px #CCC solid; padding: 10px">{{ output|linebreaksbr }}</pre>
-{% endfor %}
+<p>Task ID: {{ task_id }}</p>
 {% else %}
 <h1>Run command:</h1>
 <p>Please enter the command key</p>
@@ -18,6 +15,4 @@
     <p><input type="submit"></p>
 </form>
 {% endif %}
-</div>
-</body>
-</html>
+{% endblock %}

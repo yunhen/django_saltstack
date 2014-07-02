@@ -19,9 +19,9 @@ class SaltCommand(TimeStampedModel):
         max_length=256,
         help_text=u'Salt function to execute. E.g. "state.highstate"')
 
-    def run(self):
+    def run_async(self):
         client = salt.client.LocalClient()
-        return client.cmd(
+        return client.cmd_async(
             self.salt_target,
             self.salt_function,
             [a.value for a in self.saltarg_set.all()]

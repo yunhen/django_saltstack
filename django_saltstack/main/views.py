@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.views.generic import (
-    FormView
+    FormView, TemplateView
 )
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
@@ -25,7 +25,7 @@ class TriggerSaltCommandView(FormView):
         cmd = get_object_or_404(SaltCommand, key=form.cleaned_data['key'])
         return self.render_to_response(
             context={
-                'last_cmd_out': cmd.run(),
+                'task_id': cmd.run_async(),
                 'cmd': cmd,
             }
         )
