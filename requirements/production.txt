@@ -3,3 +3,4 @@
 -r base.txt
 
 psycopg2
+raven
