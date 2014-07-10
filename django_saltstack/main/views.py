@@ -12,7 +12,7 @@ from braces.views import LoginRequiredMixin
 
 from .forms import KeyForm
 from .models import SaltCommand
-from .utils import notify_hipchat
+from .utils import notify_hipchat, get_task_info
 
 
 class TriggerSaltCommandView(FormView):
@@ -34,3 +34,14 @@ class TriggerSaltCommandView(FormView):
                 'cmd': cmd,
             }
         )
+
+
+class GetTaskInfoView(TemplateView):
+    template_name = 'main/get_task_info.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(GetTaskInfoView, self).get_context_data(**kwargs)
+        print 'getting taskinfo...'
+        context['output'] = get_task_info(self.kwargs['task_id'])
+        print 'finished getting infos...'
+        return context

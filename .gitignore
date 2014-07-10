@@ -39,3 +39,5 @@ tramp
 Thumbs.db
 Desktop.ini
 
+# untracked settings
+local_settings.py
