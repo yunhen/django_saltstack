@@ -5,10 +5,10 @@ from django.conf import settings
 
 
 def notify_hipchat(msg):
-    hipster = hipchat.HipChat(token=settings.get('HIPCHAT_TOKEN'))
+    hipster = hipchat.HipChat(token=settings.HIPCHAT_TOKEN)
     hipster.message_room(
-        settings.get('HIPCHAT_ROOM'),
-        settings.get('HIPCHAT_NAME'),
+        settings.HIPCHAT_ROOM,
+        settings.HIPCHAT_NAME,
         msg,
-        color=settings.get('HIPCHAT_COLOR')
+        color=settings.HIPCHAT_COLOR
     )
