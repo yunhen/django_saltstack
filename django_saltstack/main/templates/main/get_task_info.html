@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h3>Task {{ output.jid }} output:</h3>
+<p>Success: {{ output.success }}</p>
+<p>Return: {{ output.return|pprint|linebreaks }}</p>
+<p><pre>{{ output }}</pre></p>
+{% endblock %}
