@@ -8,7 +8,7 @@ from model_utils.models import TimeStampedModel
 from adminsortable.models import Sortable
 
 
-class SaltCommand(TimeStampedModel):
+class SaltCommand(Sortable):
     name = models.CharField(max_length=256)
     description = models.TextField()
     key = UUIDField(auto=True)
@@ -38,6 +38,9 @@ class SaltCommand(TimeStampedModel):
             self.salt_function,
             ' '.join([a.value for a in self.saltarg_set.all()])
         )
+
+    class Meta(Sortable.Meta):
+        pass
 
 
 class SaltArg(Sortable):

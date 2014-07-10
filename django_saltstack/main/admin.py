@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from django.contrib import admin
-from adminsortable.admin import SortableTabularInline
+from adminsortable.admin import SortableTabularInline, SortableAdmin
 from .models import SaltCommand, SaltArg
 
 
@@ -10,7 +10,7 @@ class SaltArgInline(SortableTabularInline):
     extra = 1
 
 
-class SaltCommandAdmin(admin.ModelAdmin):
+class SaltCommandAdmin(SortableAdmin):
     inlines = [SaltArgInline]
     list_display = ['name', 'key', 'salt_target', 'salt_function']
 
