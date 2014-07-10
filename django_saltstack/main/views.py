@@ -12,6 +12,7 @@ from braces.views import LoginRequiredMixin
 
 from .forms import KeyForm
 from .models import SaltCommand
+from .utils import notify_hipchat
 
 
 class TriggerSaltCommandView(FormView):
@@ -23,9 +24,13 @@ class TriggerSaltCommandView(FormView):
 
     def form_valid(self, form):
         cmd = get_object_or_404(SaltCommand, key=form.cleaned_data['key'])
+        task_id = cmd.run_async()
+        if cmd.hipchat_notification_msg:
+            notify_hipchat(cmd.hipchat_notification_msg.format(
+                cmd=cmd, id=task_id))
         return self.render_to_response(
             context={
-                'task_id': cmd.run_async(),
+                'task_id': task_id,
                 'cmd': cmd,
             }
         )

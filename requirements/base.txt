@@ -7,3 +7,4 @@ South
 salt
 django-uuidfield==0.5.0
 django-admin-sortable
+python-simple-hipchat

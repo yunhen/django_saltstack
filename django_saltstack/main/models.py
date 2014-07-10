@@ -18,6 +18,11 @@ class SaltCommand(TimeStampedModel):
     salt_function = models.CharField(
         max_length=256,
         help_text=u'Salt function to execute. E.g. "state.highstate"')
+    hipchat_notification_msg = models.TextField(
+        blank=True,
+        null=True,
+        help_text=u'Message that will be posted in hipchat when this key is triggered\
+                use placeholder {cmd} for command and {id} for task_id')
 
     def run_async(self):
         client = salt.client.LocalClient()
