@@ -3,6 +3,7 @@ from south.utils import datetime_utils as datetime
 from south.db import db
 from south.v2 import SchemaMigration
 from django.db import models
+import uuid
 
 
 class Migration(SchemaMigration):
@@ -15,7 +16,7 @@ class Migration(SchemaMigration):
 
         # Adding field 'SaltCommand.github_secret'
         db.add_column(u'main_saltcommand', 'github_secret',
-                      self.gf('uuidfield.fields.UUIDField')(default='19e608db-04f5-450c-bacf-0286c0dda821', unique=True, max_length=32, blank=True),
+                      self.gf('uuidfield.fields.UUIDField')(default=uuid.uuid4, unique=True, max_length=32, blank=True),
                       keep_default=False)
 
 
