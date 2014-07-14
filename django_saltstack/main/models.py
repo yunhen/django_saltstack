@@ -7,6 +7,8 @@ import salt.client
 from model_utils.models import TimeStampedModel
 from adminsortable.models import Sortable
 
+from .utils import notify_hipchat
+
 
 class SaltCommand(Sortable):
     name = models.CharField(max_length=256)
@@ -23,14 +25,28 @@ class SaltCommand(Sortable):
         null=True,
         help_text=u'Message that will be posted in hipchat when this key is triggered\
                 use placeholder {cmd} for command and {id} for task_id')
+    is_github_hook = models.BooleanField(
+        default=False,
+        help_text=u'If this is checked the command can only be triggered "github-style": https://developer.github.com/webhooks/')
+    github_secret = UUIDField(auto=True)
 
     def run_async(self):
         client = salt.client.LocalClient()
-        return client.cmd_async(
+        task_id = client.cmd_async(
             self.salt_target,
             self.salt_function,
             [a.value for a in self.saltarg_set.all()]
         )
+        if self.hipchat_notification_msg:
+            notify_hipchat(self.hipchat_notification_msg.format(
+                cmd=self, id=task_id))
+            return task_id
+
+    def get_absolute_url(self):
+        if self.is_github_hook:
+            return reverse('github_trigger_salt_command', kwargs={'key': str(self.key)})
+        else:
+            return reverse('trigger_salt_command')
 
     def __unicode__(self):
         return 'salt \'{}\' {} {}'.format(
