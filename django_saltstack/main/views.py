@@ -1,5 +1,6 @@
 # coding=utf-8
 import hmac
+import hashlib
 
 from django.views.generic import (
     FormView, TemplateView, DetailView
@@ -64,7 +65,9 @@ class GithubTriggerSaltCommandView(DetailView):
         # verify signature:
         # https://developer.github.com/v3/repos/hooks/#create-a-hook
         (hashmethod, signature) = request.META.get('HTTP_X_HUB_SIGNATURE', '').split('=')
-        sig = hmac.new(str(self.object.github_secret), request.body, hashmethod)
+        if not hashmethod == 'sha1':
+            raise Http404('Hashmethod not supported')
+        sig = hmac.new(str(self.object.github_secret), request.body, hashlib.sha1)
         if not sig.hexdigest() == signature:
             raise PermissionDenied()
 
