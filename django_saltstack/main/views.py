@@ -65,7 +65,7 @@ class GithubTriggerSaltCommandView(DetailView):
         # https://developer.github.com/v3/repos/hooks/#create-a-hook
         signature = request.META.get('HTTP_HUB_SIGNATURE')
         sig = hmac.new(str(self.object.github_secret), request.body)
-        if not hmac.compare_digest(sig.hexdigest(), signature):
+        if not sig.hexdigest() == signature:
             raise PermissionDenied()
 
         task_id = self.object.run_async()
