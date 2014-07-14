@@ -18,6 +18,10 @@ def notify_hipchat(msg):
 
 
 def get_task_info(task_id):
+    '''
+    this function sometimes is blocking forever (probably when initializing the runner).
+    Needs debugging.
+    '''
     print "get config..."
     # opts = salt.config.master_config('/etc/salt/master')
     print "patch opts"
