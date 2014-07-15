@@ -33,11 +33,11 @@ class TriggerSaltCommandView(FormView):
         return reverse('trigger_salt_command')
 
     def form_valid(self, form):
+        cmd = get_object_or_404(SaltCommand, key=form.cleaned_data['key'])
         # verify this is not a github hook
-        if self.object.is_github_hook:
+        if cmd.is_github_hook:
             raise Http404()
 
-        cmd = get_object_or_404(SaltCommand, key=form.cleaned_data['key'])
         task_id = cmd.run_async()
         context = self.get_context_data(self.kwargs)
         context.update({
