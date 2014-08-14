@@ -38,8 +38,11 @@ class SaltCommand(Sortable):
             [a.value for a in self.saltarg_set.all()]
         )
         if self.hipchat_notification_msg:
-            notify_hipchat(self.hipchat_notification_msg.format(
-                cmd=self, id=task_id))
+            rendered_msg = self.hipchat_notification_msg.format(cmd=self, id=task_id)
+            msg = '{msg} View state log on https://saltobserver.ax-semantics.com/jobs/{id} after state has finished.'.format(
+                msg=rendered_msg,
+                id=task_id)
+            notify_hipchat(msg)
             return task_id
 
     def get_absolute_url(self):
