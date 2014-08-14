@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.conf import settings
 
 from uuidfield import UUIDField
 import salt.client
@@ -39,7 +40,8 @@ class SaltCommand(Sortable):
         )
         if self.hipchat_notification_msg:
             rendered_msg = self.hipchat_notification_msg.format(cmd=self, id=task_id)
-            msg = '{msg} View state log on https://saltobserver.ax-semantics.com/jobs/{id} after state has finished.'.format(
+            msg = '{msg} View state log on {saltobserver_url}/jobs/{id} after state has finished.'.format(
+                saltobserver_url=settings.SALTOBSERVER_URL,
                 msg=rendered_msg,
                 id=task_id)
             notify_hipchat(msg)
