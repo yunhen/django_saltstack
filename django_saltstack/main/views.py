@@ -39,7 +39,7 @@ class TriggerSaltCommandView(FormView):
             raise Http404()
 
         task_id = cmd.run_async()
-        context = self.get_context_data(self.kwargs)
+        context = self.get_context_data(**self.kwargs)
         context.update({
             'task_id': task_id,
             'cmd': cmd,
