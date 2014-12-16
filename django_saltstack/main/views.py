@@ -81,3 +81,30 @@ class GithubTriggerSaltCommandView(DetailView):
         context = super(GithubTriggerSaltCommandView, self).get_context_data(**kwargs)
         context['site'] = get_current_site(self.request)
         return context
+
+
+class DockerHubTriggerSaltCommandView(DetailView):
+    model = SaltCommand
+    template_name = 'main/dockerhub_trigger_salt_command.html'
+    http_method_names = [u'get', u'post']
+
+    def get_object(self):
+        return get_object_or_404(SaltCommand, key=self.kwargs['key'])
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+
+        # verify this is a dockerhub hook
+        if not self.object.is_dockerhub_hook:
+            raise Http404()
+
+        task_id = self.object.run_async()
+
+        context = self.get_context_data(object=self.object)
+        context['task_id'] = task_id
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super(DockerHubTriggerSaltCommandView, self).get_context_data(**kwargs)
+        context['site'] = get_current_site(self.request)
+        return context

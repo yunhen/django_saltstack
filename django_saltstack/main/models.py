@@ -31,6 +31,10 @@ class SaltCommand(Sortable):
         help_text=u'If this is checked the command can only be triggered "github-style": https://developer.github.com/webhooks/')
     github_secret = UUIDField(auto=True)
 
+    is_dockerhub_hook = models.BooleanField(
+        default=False,
+        help_text=u'If this is checked the command can only be triggered "dockerhub-style": https://docs.docker.com/docker-hub/repos/#webhooks')
+
     def run_async(self):
         client = salt.client.LocalClient()
         task_id = client.cmd_async(
@@ -50,6 +54,8 @@ class SaltCommand(Sortable):
     def get_absolute_url(self):
         if self.is_github_hook:
             return reverse('github_trigger_salt_command', kwargs={'key': str(self.key)})
+        elif self.is_dockerhub_hook:
+            return reverse('dockerhub_trigger_salt_command', kwargs={'key': str(self.key)})
         else:
             return reverse('trigger_salt_command')
 
