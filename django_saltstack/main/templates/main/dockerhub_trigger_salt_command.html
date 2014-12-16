@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% if task_id %}
+<h1>Cmd has been queued:</h1>
+<pre>{{ cmd }}</pre>
+<p>Task ID: {{ task_id }}</p>
+{% else %}
+<h1>DockerHub-Hook Config:</h1>
+<table>
+    <tr>
+        <th style="text-align:right"><strong>URL:</strong></th>
+        <td style="text-align:left">https://{{ site.domain }}{% url 'dockerhub_trigger_salt_command' key=saltcommand.key %}</td>
+    </tr>
+</table>
+{% endif %}
+{% endblock %}
