@@ -13,3 +13,4 @@ django-admin-sortable
 psycopg2
 raven
 python-simple-hipchat
+django-debug-toolbar==1.2.1
