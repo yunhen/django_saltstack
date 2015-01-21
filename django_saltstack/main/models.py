@@ -40,7 +40,8 @@ class SaltCommand(Sortable):
         task_id = client.cmd_async(
             self.salt_target,
             self.salt_function,
-            [a.value for a in self.saltarg_set.all()]
+            [a.value for a in self.saltarg_set.all()],
+            ret=settings.DEFAULT_RETURNERS,
         )
         if self.hipchat_notification_msg:
             rendered_msg = self.hipchat_notification_msg.format(cmd=self, id=task_id)
