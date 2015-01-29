@@ -6,10 +6,11 @@ USER root
 RUN apt-get update && apt-get install -y software-properties-common
 RUN add-apt-repository -y ppa:saltstack/salt
 RUN apt-get update
-RUN apt-get install -y salt-master python-dateutil python-pip libgit2-dev libffi-dev salt-cloud redis-server python-git supervisor
+RUN apt-get install -y salt-master python-pip libgit2-dev libffi-dev salt-cloud redis-server python-git supervisor python3-pip python3-dev
 
 RUN easy_install -U pip
-RUN pip install python-simple-hipchat apache-libcloud boto dnspython cli53 redis raven
+RUN pip install python-simple-hipchat apache-libcloud boto dnspython cli53 redis raven python-dateutil
+RUN pip3 install python-simple-hipchat apache-libcloud boto dnspython cli53 redis raven python-dateutil
 
 ADD docker_files/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
