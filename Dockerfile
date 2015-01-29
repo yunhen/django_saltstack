@@ -10,7 +10,7 @@ RUN apt-get install -y salt-master python-pip libgit2-dev libffi-dev salt-cloud 
 
 RUN easy_install -U pip
 RUN pip install python-simple-hipchat apache-libcloud boto dnspython cli53 redis raven python-dateutil
-RUN pip3 install python-simple-hipchat apache-libcloud boto dnspython cli53 redis raven python-dateutil
+RUN pip3 install python-dateutil
 
 ADD docker_files/supervisor.conf /etc/supervisor/conf.d/supervisor.conf
 
