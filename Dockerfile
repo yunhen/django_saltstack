@@ -1,4 +1,4 @@
-FROM aexea/py2-django-base
+FROM aexea/django-base-py2
 MAINTAINER Aexea Carpentry
 
 USER root
